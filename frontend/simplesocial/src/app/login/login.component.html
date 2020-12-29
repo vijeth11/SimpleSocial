@@ -1,0 +1,33 @@
+<div class="container">
+ <div *ngIf="registerView" class="justify-content-center">
+    <h1>Sign Up</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm)">
+      <label>Username:
+        <input type="text" formControlName="username"/>
+      </label>
+      <label>Email
+        <input type="email" formControlName="email"/>
+      </label>
+      <label> Password 
+        <input type="password" formControlName="password" >
+      </label>
+      <label> confirm Password
+        <input type="text" formControlName="password1">
+      </label>
+      <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </form>
+  </div>
+  <div *ngIf="!registerView" class="justify-content-center">
+    <h1>Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
+      <label> Username or Email
+        <input type="text" formControlName="username">
+      </label>
+      <label> Password
+        <input type="password" formControlName="password"/>
+      </label>
+    </form>
+    <button type="submit" [disabled]="!profileForm.valid">Login</button>
+    <button type="button" (onclick)="registerView=true">Register</button>
+  </div>
+</div>
