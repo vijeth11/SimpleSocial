@@ -1,3 +1,11 @@
-<p>
-  form works!
-</p>
+<h4>Create New Group</h4>
+<form  [formGroup]="createGroupForm" (ngSubmit)="onCreate(createGroupForm)">
+    <label>Name:
+      <input type="text" formControlName="name"/>
+    </label>
+    <label>Description
+      <input type="text" formControlName="description"/>
+    </label>
+    <!--Create a drop down for selecting members-->
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>

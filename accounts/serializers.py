@@ -39,6 +39,14 @@ class AccountUserAuthTokenSerializer(serializers.Serializer):
         validated_data['user'] = user
         return validated_data
 
+class AccountUserRelatedFieldSerializer(serializers.RelatedField):
+    def to_representation(self, value):
+        return {"id":value.id,"username":value.username}
+
+class GroupRelatedFieldSerializer(serializers.RelatedField):
+
+    def to_representation(self, value):
+        return {"id":value.id,"name":value.name}
 
 """class GroupCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -73,8 +81,16 @@ class GroupSerializer(serializers.ModelSerializer):
         
 
 class PostSerializer(serializers.ModelSerializer):
-
+    group = serializers.PrimaryKeyRelatedField(required=True,
+    queryset=Group.objects.all())
     class Meta:
         model = Post
         fields = ['id','user','created_at','message','message_html','group']
-        extra_kwargs = {'id':{'read_only':True}}
+        read_only_fields = ['id', 'user','message_html','created_at']
+
+class PostViewSerializer(PostSerializer):
+
+    group = GroupRelatedFieldSerializer(read_only=True)
+    user =  AccountUserRelatedFieldSerializer(read_only=True)
+
+    
