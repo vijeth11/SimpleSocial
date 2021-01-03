@@ -15,6 +15,7 @@ class Group(models.Model):
     slug = models.SlugField(allow_unicode=True,unique=True)
     description = models.TextField(blank=True,default='')
     description_html = models.TextField(editable=False,default='',blank=True)
+    adminUser = models.ForeignKey(User, related_name='admin_user_group', on_delete = models.CASCADE)
     members = models.ManyToManyField(User,through='GroupMember', blank=True)
 
     def __str__(self):

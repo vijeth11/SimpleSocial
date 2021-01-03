@@ -14,7 +14,8 @@ router.register('post-update',PostUpdateAndDeleteViewSet)
 
 urlpatterns = [
     path('login/',UserLoginAPIView.as_view(),name="login"),
+    path('get-token',GetCurrentUserTokenView.as_view(),name="get-token"),
     path('add-member/',GroupMemberCreateView.as_view(),name="addMember"),
-    path('delete-member/<int:pk>/',GroupMemberView.as_view(),name="addMember"),
+    path('delete-member/<int:pk>/',GroupMemberView.as_view(),name="deleteMember"),
     path('',include(router.urls))
 ]

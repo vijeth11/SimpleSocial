@@ -1,0 +1,17 @@
+.list-group-item{
+    text-decoration: none;
+    color:black;
+}
+
+.list-group-item:hover{
+    cursor: default;
+}
+
+.title{
+    color:blue;
+    text-decoration: underline;
+}
+
+.title:hover{
+    cursor:pointer;
+}

@@ -1,3 +1,14 @@
-<p>
-  form works!
-</p>
+<div class="post-page">
+  <div class="container">
+    <div class="row">
+      <h4>Create a new post</h4>
+      <form [formGroup]='postForm' (submit)="createPost(postForm)">
+        <label>Message
+          <input type="text" formControlName="Message">
+        </label>
+        <!--Add Drop down to select the group for the post-->
+        <input type="submit" value="Post" class="btn btn-primary btn-large">
+      </form>
+    </div>
+  </div>
+</div>

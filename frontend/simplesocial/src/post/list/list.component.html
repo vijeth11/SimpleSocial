@@ -1,3 +1,35 @@
-<p>
-  post list works!
-</p>
+<div class="post=-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-with-shaddow">
+          <div class="content">
+            <h5 class="title">Your Groups</h5>
+            <ul class="list-unstyled">
+              <li *ngFor="let group of usergroups" class='group li-with-bullet'> 
+                <a routerLink="['group',group.id,'detail']"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card ard-with-shadow">
+          <div class="content">
+            <h5 class='title'>All Groups</h5>
+            <ul class='list-unstyled'>
+              <li *ngFor="let group of othergroups" class='group li-with-bullet'>
+                <a routerLink="['group',group.id,'detail']"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <ng-template *ngFor="let post of posts">
+          <post-detail [post]="post"></post-detail>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add A model to display confirm delete -->

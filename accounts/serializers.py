@@ -74,15 +74,18 @@ class GroupMemberSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     
     members = AccountUserSerializer(many = True, read_only =True)
+    adminUser = AccountUserSerializer(read_only=True)
     class Meta:
         model = Group
-        fields = ['id','name','description','members','slug']
-        read_only_fields = ['id','slug']
+        fields = ['id','name','description','members','slug','adminUser']
+        read_only_fields = ['id','slug','adminUser']
         
 
 class PostSerializer(serializers.ModelSerializer):
-    group = serializers.PrimaryKeyRelatedField(required=True,
-    queryset=Group.objects.all())
+    group = serializers.PrimaryKeyRelatedField(
+        required=True,
+    queryset=Group.objects.all()
+    )
     class Meta:
         model = Post
         fields = ['id','user','created_at','message','message_html','group']

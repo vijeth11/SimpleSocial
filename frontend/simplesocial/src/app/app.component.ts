@@ -16,4 +16,8 @@ export class AppComponent {
   public isAuthenticated():boolean{
     return this.service.Authorized();
   }
+
+  public logout(){
+    this.service.logout();
+  }
 }

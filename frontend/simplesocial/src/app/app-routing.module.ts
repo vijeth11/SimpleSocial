@@ -3,7 +3,6 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout/logout.component';
-import { PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   {path: 'home', component: HomepageComponent},

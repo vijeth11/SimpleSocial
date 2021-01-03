@@ -1,44 +1,47 @@
-<div class="row">
-  <div class="col-md-4">
-    <div class="content">
-        <ng-template *ngIf="userIsAuthenticated">
-          <h2>Welcome Back!</h2>
-          <!-- take to posts of the user on click-->
-          <a href="">
-            @User Name
-          </a>
-        </ng-template>
-        <h2>Groups</h2>
-        <p>Welcome to the groups page!</p>
-        <ng-template *ngIf="userIsAuthenticated">
-          <!--Take user to create Group form-->
-            <a href="" class="btn btn-md btn-fill btn-warning">
-              <span class="glyphicon glyphicon-plus-sign">Create New Group!</span>
+<div class="group-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="content">
+            <ng-template [ngIf]="userIsAuthenticated">
+              <h2>Welcome Back!</h2>
+              <!-- take to posts of the user on click-->
+              <a href="">
+                @User Name
+              </a>
+            </ng-template>
+            <h2>Groups</h2>
+            <p>Welcome to the groups page!</p>
+            <ng-template [ngIf]="userIsAuthenticated">
+              <!--Take user to create Group form-->
+                <a href="" class="btn btn-md btn-fill btn-warning">
+                  <span class="glyphicon glyphicon-plus-sign">Create New Group!</span>
+                </a>
+            </ng-template>
+        </div>
+      </div>
+      <div class = col-md-8>
+        <div class="list-group">
+          <ng-template [ngIf]="groups.length > 0">
+            <!--Link to that group detail page-->
+            <a *ngFor="let group of groups" href="" class="list-group-item">
+              <h3 class="title list-group-item-heading">{{group.name}}</h3>
+              <div class="list-group-item-text container-fluid">
+                <h5>Description:</h5>
+                {{group.description}}
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-4">
+                  Total Members : <span class="badge">{{group.members.length}}</span>                  
+                </div>
+                <div class="col-md-4">
+                  Total Posts : <span class='badge'>Group posts count need to be put</span>                  
+                </div>
+              </div>
             </a>
-        </ng-template>
-    </div>
-  </div>
-  <div class = col-md-8>
-    <div class="list-group">
-      <ng-template *ngIf="groups.length > 0">
-        <!--Link to that group detail page-->
-        <a *ngFor="let group in groups" href="" class="list-group-item">
-          <h3 class="title list-group-item-heading">Group Name to be placed here</h3>
-          <div class="list-group-item-text container-fluid">
-            Group Description to be put here
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <span class="badge">Put group members Count</span>
-              member 'Group member count pluralize'
-            </div>
-            <div class="col-md-4">
-              <span class='badge'>Group posts count need to be put</span>
-              posts 'Group posts count pluralize'
-            </div>
-          </div>
-        </a>
-      </ng-template>      
+          </ng-template>      
+        </div>
     </div>
   </div>
 </div>

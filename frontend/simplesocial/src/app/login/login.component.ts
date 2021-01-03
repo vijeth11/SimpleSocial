@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(form:FormGroup){
-    console.log(form.value.username);
+    this.service.login(form.value.username,form.value.password);
   }
 
 }

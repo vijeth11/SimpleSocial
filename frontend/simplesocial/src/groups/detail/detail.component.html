@@ -1,27 +1,41 @@
-<!--Group Name from backend-->
-<h1> Group Name </h1>
-<!--total-members from backend-->
-<h2>Member Count : total-members</h2>
-<div class="content">
-  <ng-template *ngIf="userInCurrentGroup">
-    <!-- pass group slug to leave url-->
-    <a href="" class = "btn btn-lg btn-fill btn-warning"> 
-      Group Leave <span class="glyphicon glyphicon-remove-circle"></span>
-    </a>
-  </ng-template>
-  <ng-template *ngIf="!userInCurrentGroup">
-    <!-- pass group slug to join url-->
-    <a href="" class = "btn btn-lg btn-fill btn-warning"> 
-        Group Join <span class="glyphicon glyphicon-ok-circle"></span>
-    </a>
-  </ng-template>
-</div>
+<div class="group-page">
+  <div class="container">
+    <div class="row">
+      <!--Group Name from backend-->
+        <div class="col-md-8">
+          <h1> {{group?.name}} </h1>
+          <br>
+          <h2>Member Count : {{group?.members?.length}}</h2>
+          <br>
+          <div class="content">
+            <ng-template [ngIf]="userInCurrentGroup">
+              <!-- pass group slug to leave url-->
+              <a href="" class = "btn btn-lg btn-fill btn-warning"> 
+                Group Leave <span class="glyphicon glyphicon-remove-circle"></span>
+              </a>
+              <a *ngIf="group?.adminuser?.username == loggedInUserName" routerLink="['group','update']" class = "btn btn-lg btn-fill btn-warning"> 
+                Group Update <span class="glyphicon glyphicon-remove-circle"></span>
+              </a>
+            </ng-template>
+            <ng-template [ngIf]="!userInCurrentGroup">
+              <!-- pass group slug to join url-->
+              <a href="" class = "btn btn-lg btn-fill btn-warning"> 
+                  Group Join <span class="glyphicon glyphicon-ok-circle"></span>
+              </a>
+            </ng-template>
+          </div>
+        </div>
 
-<div class="row">
-  <div class = "col-md-8">
-    <ul *ngIf="posts.length > 0;else noPostMessage">
-        <post-list></post-list>
-    </ul>
-    <h2 #noPostMessage >No posts in this group yet!</h2>
+      <div class="row">
+        <div class = "col-md-8">
+          <ul *ngIf="posts.length > 0;else noPostMessage">
+              <post-list></post-list>
+          </ul>
+          <ng-template #noPostMessage>
+            <h2>No posts in this group yet!</h2>
+          </ng-template>          
+        </div>
+      </div>
+    </div>
   </div>
 </div>

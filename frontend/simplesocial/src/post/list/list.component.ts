@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
+  public usergroups:any = [];
+  public posts:any = [];
+  public othergroups:any = [];
+  isUserAuthenticated:boolean = true;
+
   constructor() { }
 
   ngOnInit() {

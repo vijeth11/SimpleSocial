@@ -14,7 +14,7 @@
       <label> confirm Password
         <input type="text" formControlName="password1">
       </label>
-      <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+      <button type="submit" [disabled]="!registerForm?.valid">Submit</button>
     </form>
   </div>
   <div *ngIf="!registerView" class="justify-content-center">
@@ -26,8 +26,9 @@
       <label> Password
         <input type="password" formControlName="password"/>
       </label>
+      <button type="submit" [disabled]="!loginForm?.valid">Login</button>
+      <button type="button" (onclick)="registerView=true">Register</button>
     </form>
-    <button type="submit" [disabled]="!profileForm.valid">Login</button>
-    <button type="button" (onclick)="registerView=true">Register</button>
+    
   </div>
 </div>
