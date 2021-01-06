@@ -36,8 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   onRegister(form: FormGroup){
-    console.log('Valid?', form.valid);
-    console.log('Name',form.value.username);
+    this.service.register(form.value.email, form.value.username, form.value.password, form.value.password1);
   }
 
   onLogin(form:FormGroup){

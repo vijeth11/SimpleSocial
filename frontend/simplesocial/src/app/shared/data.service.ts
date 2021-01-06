@@ -77,4 +77,32 @@ export class DataService {
       this.router.navigate(['logout']);
     });
   }
+
+  public register(email,username,password1,password2){
+    let cookie = '';
+    document.cookie.split(';').forEach( ele => {
+       let data = ele.split("=");
+       if(data[0].trim().toLowerCase()=='csrftoken'){
+        cookie = data[1];
+       }
+    });
+    this.http.post('api/user/',
+    {
+      "username":username,
+      "email":email,
+      "password":password1,
+      "password2":password2
+    },
+    {
+      headers:
+      {
+        'X-CSRFToken': cookie
+      }
+    }).subscribe(()=>{
+      this.router.navigate(['login',{'type':'login'}]);
+    },
+    (error)=>{
+      alert(error);
+    });
+  }
 }

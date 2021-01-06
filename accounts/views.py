@@ -41,7 +41,7 @@ class GetCurrentUserTokenView(APIView):
             if request.query_params['username'] is not None:
                 user = AccountUser.objects.filter(email = request.query_params['username']).first()
                 if user is not None:
-                    token = Token.objects.get(user = user)
+                    token = Token.objects.filter(user = user).first()
                     if token:
                         return Response({'token':token.key},status=status.HTTP_200_OK)
                     else:
