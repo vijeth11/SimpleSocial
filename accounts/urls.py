@@ -18,5 +18,6 @@ urlpatterns = [
     path('get-token',GetCurrentUserTokenView.as_view(),name="get-token"),
     path('add-member/',GroupMemberCreateView.as_view(),name="addMember"),
     path('group/<int:pk>/deletemember/<int:userid>/',GroupViewSet.as_view({"delete":"leave_the_group"})),
+    path('user/logout/',AccountUserViewSet.as_view({"get":"logout"})),
     path('',include(router.urls))
 ]

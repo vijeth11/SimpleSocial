@@ -3,11 +3,12 @@ from accounts.models import AccountUser
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from rest_framework.decorators import action, authentication_classes as auth_classes, permission_classes as permissions_class
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.settings import api_settings
 from .serializers import AccountUserSerializer, AccountUserAuthTokenSerializer
 # Create your views here.
@@ -19,6 +20,8 @@ class AccountUserViewSet(viewsets.ModelViewSet):
     permission_classes =(permissions.UpdateUserProfile,)
     search_fields =('username','email',)
 
+    @auth_classes((TokenAuthentication,))
+    @permissions_class((IsAuthenticated,))
     @action(methods=['GET'], detail = True, url_path='logout')
     def logout(self, request, pk=None):
         token = Token.objects.get(user = request.user)

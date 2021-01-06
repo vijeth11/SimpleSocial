@@ -40,7 +40,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         member.save()
 
     @auth_classes((TokenAuthentication,))
-    @permissions((IsAuthenticated,AdminUserCanOnlyUpdate))
+    @permissions((IsAuthenticated,))
     @action(methods=['GET','DELETE'], detail = True)
     def leave_the_group(self, request, pk=None,*args, **kwargs):
         userid = kwargs['userid'] #it is not used just to learn how to send extra data

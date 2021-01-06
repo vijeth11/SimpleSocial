@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   private loggedinUserToken:string = '';
   private userName:string ='';
-
-  constructor(private http:HttpClient,private router:Router) { }
+  public isUserLoggedIn:Subject<boolean> = new Subject<boolean>();
+  constructor(private http:HttpClient,private router:Router) { 
+    this.isUserLoggedIn.next(false);
+  }
 
   public getUserName():string{
     return this.userName;
   }
   public Authorized():boolean{
     this.getLoggedInUserToken();
+    this.isUserLoggedIn.next(this.loggedinUserToken.length > 0);
     return this.loggedinUserToken.length > 0 ?  true: false;
   }
 
@@ -41,6 +45,7 @@ export class DataService {
        }
     });
     this.http.get('api/get-token?username='+email).subscribe((data:any) => {
+      this.isUserLoggedIn.next(true);
       this.setLoginTokenandUsername(email,data.token);
       this.router.navigate(['home']);
     },
@@ -53,6 +58,7 @@ export class DataService {
           'X-CSRFToken': cookie
         }
       }).subscribe((data:any) => {
+        this.isUserLoggedIn.next(true);
         this.setLoginTokenandUsername(email,data.token);
         this.router.navigate(['home']);
       });
@@ -66,7 +72,8 @@ export class DataService {
       }
     }).subscribe(() => {
       this.loggedinUserToken = '';
-      localStorage.removeItem('usertoken');
+      localStorage.removeItem('userToken');
+      this.isUserLoggedIn.next(false);
       this.router.navigate(['logout']);
     });
   }
