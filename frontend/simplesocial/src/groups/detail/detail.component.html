@@ -10,10 +10,10 @@
           <div class="content">
             <ng-template [ngIf]="userInCurrentGroup">
               <!-- pass group slug to leave url-->
-              <a href="" class = "btn btn-lg btn-fill btn-warning"> 
+              <button (click)="leaveGroup(group.id,$event)" class = "btn btn-lg btn-fill btn-warning"> 
                 Group Leave <span class="glyphicon glyphicon-remove-circle"></span>
-              </a>
-              <a *ngIf="group?.adminuser?.username == loggedInUserName" routerLink="['group','update']" class = "btn btn-lg btn-fill btn-warning"> 
+              </button>
+              <a *ngIf="isLoggedInUserAdmin()" [routerLink]="['../../../','group','update']" class = "btn btn-lg btn-fill btn-warning"> 
                 Group Update <span class="glyphicon glyphicon-remove-circle"></span>
               </a>
             </ng-template>

@@ -22,11 +22,19 @@ export class DetailComponent implements OnInit {
     this.router.params.subscribe(groupId => {
       this.groupService.getGroup(groupId.id).subscribe((detail:Group) => {
         this.group = detail;
-        this.loggedInUserName = detail.adminuser.username; // needs to be changed to dataservice
+        this.loggedInUserName = this.service.getUserName(); 
+        //this.userInCurrentGroup = this.group.members.findIndex((element) => {return element.email==this.loggedInUserName;}) > -1;
       });
     })
   }
-
+  
+  public isLoggedInUserAdmin():boolean{
+    if(this.group && this.group.adminUser){
+    return this.group.adminUser.email == this.loggedInUserName;
+    }else{
+      return false;
+    }
+  }
   ngOnInit() {
   }
 
@@ -34,4 +42,10 @@ export class DetailComponent implements OnInit {
     return this.service.Authorized();
   }
 
+  leaveGroup(groupId:number,event:any){
+    event.preventDefault();
+    this.groupService.leaveGroup(groupId).subscribe(success=>{},error =>{
+      console.log(error);
+    })
+  }
 }

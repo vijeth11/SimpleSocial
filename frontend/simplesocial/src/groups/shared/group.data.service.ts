@@ -9,7 +9,7 @@ export class GroupDataService {
   constructor(private http:HttpClient,private authentication:DataService) { }
 
   public getGroups():Observable<Group[]>{
-    return this.http.get<Group[]>("api/group/");
+    return this.http.get<Group[]>("api/group-list/");
   }
 
   public getGroup(id:number):Observable<Group>{
@@ -26,6 +26,15 @@ export class GroupDataService {
          headers:{
              'Authorization':this.authentication.getLoggedInUserToken()
             }
+    });
+  }
+
+  public leaveGroup(groupid:number):Observable<any>{    
+    return this.http.delete<any>('api/group/'+groupid.toString()+'/deletemember/1/',
+    {
+      headers:{
+        'Authorization':this.authentication.getLoggedInUserToken()
+      }
     });
   }
 }

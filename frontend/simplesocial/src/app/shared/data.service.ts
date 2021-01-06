@@ -7,8 +7,13 @@ import { catchError } from 'rxjs/operators';
 })
 export class DataService {
   private loggedinUserToken:string = '';
+  private userName:string ='';
+
   constructor(private http:HttpClient,private router:Router) { }
 
+  public getUserName():string{
+    return this.userName;
+  }
   public Authorized():boolean{
     this.getLoggedInUserToken();
     return this.loggedinUserToken.length > 0 ?  true: false;
@@ -16,9 +21,17 @@ export class DataService {
 
   public getLoggedInUserToken():string{
     this.loggedinUserToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : this.loggedinUserToken;
+    this.userName = localStorage.getItem('username') ? localStorage.getItem('username') : this.userName;
     return this.loggedinUserToken;
   }
   
+  private setLoginTokenandUsername(username:string,token:string){
+      this.loggedinUserToken='Token '+token;
+      localStorage.setItem('userToken',this.loggedinUserToken);
+      this.userName = username;
+      localStorage.setItem('username',username);
+  }
+
   public login(email:string,password:string){
     let cookie = '';
     document.cookie.split(';').forEach( ele => {
@@ -28,8 +41,7 @@ export class DataService {
        }
     });
     this.http.get('api/get-token?username='+email).subscribe((data:any) => {
-      this.loggedinUserToken='Token '+data.token;
-      localStorage.setItem('userToken',this.loggedinUserToken);
+      this.setLoginTokenandUsername(email,data.token);
       this.router.navigate(['home']);
     },
     (error) => {
@@ -41,8 +53,7 @@ export class DataService {
           'X-CSRFToken': cookie
         }
       }).subscribe((data:any) => {
-        this.loggedinUserToken='Token '+data.token;
-        localStorage.setItem('userToken',this.loggedinUserToken);
+        this.setLoginTokenandUsername(email,data.token);
         this.router.navigate(['home']);
       });
     });    

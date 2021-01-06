@@ -79,7 +79,6 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ['id','name','description','members','slug','adminUser']
         read_only_fields = ['id','slug','adminUser']
-        
 
 class PostSerializer(serializers.ModelSerializer):
     group = serializers.PrimaryKeyRelatedField(

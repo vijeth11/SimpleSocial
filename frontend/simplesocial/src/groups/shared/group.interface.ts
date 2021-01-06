@@ -6,5 +6,5 @@ export interface Group{
     name:string;
     slug:string;
     members:GroupUser[];
-    adminuser: GroupUser;
+    adminUser: GroupUser;
 }

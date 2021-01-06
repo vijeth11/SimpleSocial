@@ -16,6 +16,11 @@
         </form>
       </div>
     </div>
+    <div class="row" *ngIf="displaySuccessMessage">
+      <div class="col-md-12 success">
+        <h1>Success fully {{type}}ed</h1>
+      </div>
+    </div>
   </div>
 </div>
 

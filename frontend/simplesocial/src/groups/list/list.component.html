@@ -7,14 +7,14 @@
               <h2>Welcome Back!</h2>
               <!-- take to posts of the user on click-->
               <a href="">
-                @User Name
+                @{{username}}
               </a>
             </ng-template>
             <h2>Groups</h2>
             <p>Welcome to the groups page!</p>
             <ng-template [ngIf]="userIsAuthenticated">
               <!--Take user to create Group form-->
-                <a href="" class="btn btn-md btn-fill btn-warning">
+                <a [routerLink]="['create']" routerLinkActive="router-link-active"  class="btn btn-md btn-fill btn-warning">
                   <span class="glyphicon glyphicon-plus-sign">Create New Group!</span>
                 </a>
             </ng-template>
@@ -24,8 +24,8 @@
         <div class="list-group">
           <ng-template [ngIf]="groups.length > 0">
             <!--Link to that group detail page-->
-            <a *ngFor="let group of groups" href="" class="list-group-item">
-              <h3 class="title list-group-item-heading">{{group.name}}</h3>
+            <a *ngFor="let group of groups" class="list-group-item">
+              <h3 (click) = "loadTheGroup(group.id)"class="title list-group-item-heading">{{group.name}}</h3>
               <div class="list-group-item-text container-fluid">
                 <h5>Description:</h5>
                 {{group.description}}
