@@ -11,6 +11,7 @@ import { GroupDataService } from '../shared/group.data.service';
 export class FormComponent implements OnInit {
 
   public type:string;
+  public groupid:number;
   public createGroupForm:FormGroup;
   public displaySuccessMessage:boolean = false;
 
@@ -21,6 +22,9 @@ export class FormComponent implements OnInit {
     ) {
     this.route.params.subscribe((data)=>{
       this.type = data.type ? data.type.toLowerCase() : 'create';
+      if(this.type=='update'){
+        this.groupid = data['id'];
+      }
     });
    }
 
@@ -33,12 +37,35 @@ export class FormComponent implements OnInit {
   }
 
   onCreate(form:FormGroup){
-    this.groupService.createGroup(form.value.name, form.value.description).subscribe(()=>{
-      this.displaySuccessMessage = true;
-      setTimeout(()=>{
-        this.displaySuccessMessage = false;
-        this.router.navigate(['group']);
-      },10000)
-    });
+    if(this.type=="create"){
+        this.groupService.createGroup(form.value.name, form.value.description).subscribe(()=>{
+          this.displaySuccessMessage = true;
+          setTimeout(()=>{
+            this.displaySuccessMessage = false;
+            this.router.navigate(['group']);
+          },5000)
+        },
+        (error)=>{
+          alert(error.error);
+        });
+    }else if (this.type == "update"){
+      this.groupService.updateGroup(this.groupid,form.value.name, form.value.description).subscribe(()=>{
+        this.displaySuccessMessage = true;
+        setTimeout(()=>{
+          this.displaySuccessMessage = false;
+          this.router.navigate(['group']);
+        },5000)
+      },
+      (error)=>{
+        if(error.error.name){
+          alert(error.error.name[0]);
+        }else if(error.error.description){
+          alert(error.error.description[0]);
+        }else{
+          alert("some error has come check with admin");
+        }
+      });
+    }
+
   }
 }

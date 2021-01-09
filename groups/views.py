@@ -1,4 +1,3 @@
-from accounts.models import AccountUser
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, authentication_classes as auth_classes,permission_classes as permissions
@@ -25,6 +24,8 @@ from .permissions import AdminUserCanOnlyUpdate
 """
 
 class GroupListViewSet(viewsets.ReadOnlyModelViewSet):
+    authentication_classes=[]
+    permission_classes=[]
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
 class GroupViewSet(viewsets.ModelViewSet):
@@ -56,7 +57,10 @@ class GroupViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class GroupMemberCreateView(generics.CreateAPIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = GroupMemberSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user.id)
 

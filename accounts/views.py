@@ -31,6 +31,8 @@ class AccountUserViewSet(viewsets.ModelViewSet):
 
 class UserLoginAPIView(ObtainAuthToken):
     """Handle creating user authentication token"""
+    authentication_classes = []
+    permissions_classes=[]
     serializer_class = AccountUserAuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 

@@ -36,14 +36,18 @@ export class DataService {
       localStorage.setItem('username',username);
   }
 
-  public login(email:string,password:string){
-    let cookie = '';
+  public getCSRFToken():string{
     document.cookie.split(';').forEach( ele => {
-       let data = ele.split("=");
-       if(data[0].trim().toLowerCase()=='csrftoken'){
-        cookie = data[1];
-       }
-    });
+      let data = ele.split("=");
+      if(data[0].trim().toLowerCase()=='csrftoken'){
+       return data[1];
+      }
+   });
+   return "";
+  }
+
+  public login(email:string,password:string){
+    let cookie = this.getCSRFToken();   
     this.http.get('api/get-token?username='+email).subscribe((data:any) => {
       this.isUserLoggedIn.next(true);
       this.setLoginTokenandUsername(email,data.token);
@@ -61,6 +65,16 @@ export class DataService {
         this.isUserLoggedIn.next(true);
         this.setLoginTokenandUsername(email,data.token);
         this.router.navigate(['home']);
+      },(error)=>{
+        if(error.error.non_field_errors && error.error.non_field_errors.length > 0){
+          alert(error.error.non_field_errors[0]);
+        }
+        else if(error.error.email && error.error.email.length > 0){
+          alert(error.error.email[0]);
+        }
+        else if(error.error.password && error.error.password.length > 0){
+          alert(error.error.password[0])
+        }
       });
     });    
   }
@@ -79,13 +93,7 @@ export class DataService {
   }
 
   public register(email,username,password1,password2){
-    let cookie = '';
-    document.cookie.split(';').forEach( ele => {
-       let data = ele.split("=");
-       if(data[0].trim().toLowerCase()=='csrftoken'){
-        cookie = data[1];
-       }
-    });
+    let cookie = this.getCSRFToken();
     this.http.post('api/user/',
     {
       "username":username,

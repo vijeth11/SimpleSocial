@@ -29,8 +29,42 @@ export class GroupDataService {
     });
   }
 
+  public updateGroup(groupid:number, name:string="", description:string=""):Observable<any>{
+    return this.http.put<any>('api/group/'+groupid+"/",
+    {
+        'name':name,
+        'description':description
+    },
+    {
+        headers:{
+            'Authorization':this.authentication.getLoggedInUserToken()
+           }
+   });
+ }
   public leaveGroup(groupid:number):Observable<any>{    
     return this.http.delete<any>('api/group/'+groupid.toString()+'/deletemember/1/',
+    {
+      headers:{
+        'Authorization':this.authentication.getLoggedInUserToken()
+      }
+    });
+  }
+
+  public deleteGroup(groupId:number):Observable<any>{
+    return this.http.delete<any>('api/group/'+groupId.toString()+'/',
+    {
+      headers:{
+        'Authorization':this.authentication.getLoggedInUserToken()
+      }
+    });
+  }
+  
+  public addMember(groupid:number):Observable<any>{
+    return this.http.post<any>('api/add-member',{
+      'csrfmiddlewaretoken': this.authentication.getCSRFToken(),
+      'group':groupid,
+      'user':this.authentication.getUserName()
+    },
     {
       headers:{
         'Authorization':this.authentication.getLoggedInUserToken()
