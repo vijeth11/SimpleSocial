@@ -4,7 +4,7 @@
         <a class="navbar-brand" [routerLink]="['/home']"> Star  Social </a> 
         <ul class="nav navbar-nav navbar-right">
             <ng-template [ngIf]="isAuthenticated">
-                <li class="nav-item"><a class="nav-link"[routerLink]="['post','create']">Post</a></li>
+                <li class="nav-item"><a class="nav-link"[routerLink]="['post']">Post</a></li>
                 <li class="nav-item"><a class="nav-link" [routerLink]="['group']">Groups</a></li>
                 <li class="nav-item"><a class="nav-link" [routerLink]="['group','create']">Create Group</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="logout()">Logout</a></li>

@@ -21,8 +21,11 @@ class PostUpdateAndDeleteViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMi
     queryset = Post.objects.all()
 
 class AllPostViewSet(viewsets.GenericViewSet,mixins.ListModelMixin):
+    authentication_classes = []
+    permission_classes = []
     serializer_class = PostViewSerializer
     queryset = Post.objects.all()
+    
 class UserPostsViewSet(viewsets.ReadOnlyModelViewSet):
      serializer_class = PostViewSerializer
      authentication_classes = (TokenAuthentication,)

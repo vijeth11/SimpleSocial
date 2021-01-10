@@ -1,3 +1,6 @@
+import { DataService } from 'src/app/shared/data.service';
+import { PostdataService } from './../shared/postdata.service';
+import { Post } from './../shared/post.interface';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -7,8 +10,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DetailComponent implements OnInit {
 
-  @Input() post:any;
-  constructor() { }
+  @Input() post:Post;
+  public isUserAuthenticated:boolean = false;
+  public loggedInUserEmail:string = "";
+  constructor(private postService:PostdataService,private authentication:DataService) {
+    this.isUserAuthenticated = this.authentication.Authorized();
+    this.loggedInUserEmail = this.authentication.getUserName();
+    this.authentication.isUserLoggedIn.subscribe((data:boolean) => {
+      this.isUserAuthenticated = data;
+      console.log(this.isUserAuthenticated);
+    });
+   }
 
   ngOnInit() {
   }

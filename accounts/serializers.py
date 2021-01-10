@@ -41,7 +41,7 @@ class AccountUserAuthTokenSerializer(serializers.Serializer):
 
 class AccountUserRelatedFieldSerializer(serializers.RelatedField):
     def to_representation(self, value):
-        return {"id":value.id,"username":value.username}
+        return {"id":value.id,"username":value.username,"email":value.email}
 
 class GroupRelatedFieldSerializer(serializers.RelatedField):
 
@@ -85,6 +85,7 @@ class PostSerializer(serializers.ModelSerializer):
         required=True,
     queryset=Group.objects.all()
     )
+    user=AccountUserSerializer(read_only=True)
     class Meta:
         model = Post
         fields = ['id','user','created_at','message','message_html','group']

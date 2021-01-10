@@ -1,19 +1,20 @@
 <div class="post media">
-          <h3>Replace with Post Message</h3>
-          <div class="media-body">
-            <strong> Replace with UserName by whome post is created</strong>
+          <h3>{{ post.message }}</h3>
+          <div class="media-body">            
             <h5 class="media-heading">
               <span class="username">
-                <a routerLink="['post',post.username,'userlist']"></a>
+                <a [routerLink]="['post',post.userusername,'userlist']"><strong> {{ post.user.username }}</strong></a>
               </span>
               <time class="time">
-                Place Post Time
+                {{ post.created_at }}
               </time>
             </h5>
             <div class="media-footer">
-                <a *ngIf="isUserAuthenticated"(onclick)="deletePost(post.id)" class="btn btn-simple">
-                  <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                <a *ngIf="isUserAuthenticated && post.user.email == loggedInUserEmail" (click)="deletePost(post.id)" class="btn btn-large btn-simple">
                   <span class="text-danger icon-label">Delete</span>
+                </a>
+                <a *ngIf="isUserAuthenticated && post.user.email == loggedInUserEmail"  [routerLink]="['../','post','create',{'id':post.group.id,'type':'update'}]"  class="btn btn-large btn-simple">
+                  <span class="text-warning icon-label">Update</span>
                 </a>
             </div>
           </div>

@@ -7,7 +7,7 @@
             <h5 class="title">Your Groups</h5>
             <ul class="list-unstyled">
               <li *ngFor="let group of usergroups" class='group li-with-bullet'> 
-                <a routerLink="['group',group.id,'detail']"></a>
+                <a [routerLink]="['../','group',group.id,'detail']">{{ group.name }}</a>
               </li>
             </ul>
           </div>
@@ -17,16 +17,14 @@
             <h5 class='title'>All Groups</h5>
             <ul class='list-unstyled'>
               <li *ngFor="let group of othergroups" class='group li-with-bullet'>
-                <a routerLink="['group',group.id,'detail']"></a>
+                <a [routerLink]="['../','group',group.id,'detail']">{{ group.name }}</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
       <div class="col-md-8">
-        <ng-template *ngFor="let post of posts">
-          <post-detail [post]="post"></post-detail>
-        </ng-template>
+        <post-detail *ngFor="let post of posts" [post]="post"></post-detail>
       </div>
     </div>
   </div>

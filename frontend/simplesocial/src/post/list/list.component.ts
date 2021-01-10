@@ -1,4 +1,6 @@
+import { PostdataService } from '../shared/postdata.service';
 import { Component, OnInit } from '@angular/core';
+import { Post } from '../shared/post.interface';
 
 @Component({
   selector: 'post-list',
@@ -8,13 +10,27 @@ import { Component, OnInit } from '@angular/core';
 export class ListComponent implements OnInit {
 
   public usergroups:any = [];
-  public posts:any = [];
+  public posts:Post[] = [];
   public othergroups:any = [];
   isUserAuthenticated:boolean = true;
 
-  constructor() { }
+  constructor(private postDataService:PostdataService) { 
+    
+  }
 
   ngOnInit() {
+    this.postDataService.getPostList().subscribe((data:Post[])=>{
+      this.posts = data;
+    })
+    this.postDataService.getGroups().subscribe((data)=>{
+        data.forEach((ele)=>{
+          if(ele.user != null){
+          this.usergroups.push(ele);
+          }else{
+            this.othergroups.push(ele);
+          }
+        })
+    });
   }
 
 }

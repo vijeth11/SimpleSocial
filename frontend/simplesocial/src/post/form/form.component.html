@@ -1,14 +1,28 @@
 <div class="post-page">
   <div class="container">
     <div class="row">
-      <h4>Create a new post</h4>
-      <form [formGroup]='postForm' (submit)="createPost(postForm)">
-        <label>Message
+      <div class="col-md-8">
+        <h4 *ngIf="type=='create'"> Create a new post</h4>
+        <h4 *ngIf="type=='update'"> Update post </h4>
+        <form [formGroup]='postForm' (submit)="createPost(postForm)">
+          <label>Message</label>
+          <br>
           <input type="text" formControlName="Message">
-        </label>
-        <!--Add Drop down to select the group for the post-->
-        <input type="submit" value="Post" class="btn btn-primary btn-large">
-      </form>
+          <br>
+          <label *ngIf="type=='create'"> Select the Group</label>
+          <select *ngIf="type=='create'" class="custom-select" formControlName="Group">
+            <option selected value="0">Choose Group</option>
+            <option *ngFor="let group of groupsList" value="{{group.id}}">{{group.name}}</option>
+          </select>
+          <br>
+          <input type="submit" value="Post" class="btn btn-primary btn-large">
+        </form>
+      </div>      
+    </div>
+    <div class="row" *ngIf="displaySuccessMessage">
+      <div class="col-md-8">
+        <h1>Success fully created</h1>
+      </div>
     </div>
   </div>
 </div>
