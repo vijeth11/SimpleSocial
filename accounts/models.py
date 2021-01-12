@@ -30,7 +30,6 @@ class AccountUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=25)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
     objects = AccountUserManager()
 
     USERNAME_FIELD = 'email'

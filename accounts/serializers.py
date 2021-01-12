@@ -1,3 +1,4 @@
+from accounts.models import AccountUser
 from django.core.validators import validate_slug
 from rest_framework import serializers
 from django.contrib.auth import get_user_model,authenticate
@@ -39,6 +40,9 @@ class AccountUserAuthTokenSerializer(serializers.Serializer):
         validated_data['user'] = user
         return validated_data
 
+    def to_representation(self, value):
+        return {"id":value.user.id,"username":value.user.username,"email":value.user.email,"token":value.token}
+        
 class AccountUserRelatedFieldSerializer(serializers.RelatedField):
     def to_representation(self, value):
         return {"id":value.id,"username":value.username,"email":value.email}

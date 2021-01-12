@@ -13,7 +13,7 @@
                 <a *ngIf="isUserAuthenticated && post.user.email == loggedInUserEmail" (click)="deletePost(post.id)" class="btn btn-large btn-simple">
                   <span class="text-danger icon-label">Delete</span>
                 </a>
-                <a *ngIf="isUserAuthenticated && post.user.email == loggedInUserEmail"  [routerLink]="['../','post','create',{'id':post.group.id,'type':'update'}]"  class="btn btn-large btn-simple">
+                <a *ngIf="isUserAuthenticated && post.user.email == loggedInUserEmail"  [routerLink]="['../','post','create',{'id':post.id,'groupId':post.group.id,'type':'update'}]"  class="btn btn-large btn-simple">
                   <span class="text-warning icon-label">Update</span>
                 </a>
             </div>

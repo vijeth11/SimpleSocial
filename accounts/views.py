@@ -36,6 +36,18 @@ class UserLoginAPIView(ObtainAuthToken):
     serializer_class = AccountUserAuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.id,
+            'email': user.email
+        })
+
 
 class GetCurrentUserTokenView(APIView):
 
@@ -45,7 +57,7 @@ class GetCurrentUserTokenView(APIView):
                 if user is not None:
                     token = Token.objects.filter(user = user).first()
                     if token:
-                        return Response({'token':token.key},status=status.HTTP_200_OK)
+                        return Response({'token':token.key,'user_id':user.id,'email':user.email},status=status.HTTP_200_OK)
                     else:
                         return Response(status=status.HTTP_404_NOT_FOUND)
                 else:

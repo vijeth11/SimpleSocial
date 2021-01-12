@@ -56,4 +56,25 @@ export class PostdataService {
       }
     });
   }
+
+  public updatePost(groupId:number, message:string, postId:number){
+    return this.http.put<any>('api/post-update/'+postId+'/',{
+      "group":groupId,
+      "message":message
+    },
+    {
+      headers:{
+        "Authorization":this.authentication.getLoggedInUserToken()
+      }
+    });
+  }
+
+  public deletePost(postId:number){
+    return this.http.delete<any>('api/post-update/'+postId+'/',
+    {
+      headers:{
+        "Authorization":this.authentication.getLoggedInUserToken()
+      }
+    });
+  }
 }

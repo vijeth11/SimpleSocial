@@ -1,3 +1,4 @@
+from posts.models import Post
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, authentication_classes as auth_classes,permission_classes as permissions
@@ -7,6 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from accounts.serializers import GroupMemberSerializer, GroupSerializer
 from .models import Group, GroupMember
 from .permissions import AdminUserCanOnlyUpdate
+from django.contrib.auth import get_user_model
 # Create your views here.
 
 """class GroupCreateViewSet(viewsets.GenericViewSet,mixins.CreateModelMixin):
@@ -49,7 +51,9 @@ class GroupViewSet(viewsets.ModelViewSet):
             group = Group.objects.filter(id=pk).first()
             if group.adminUser.id is not request.user.id:
                 groupmember = GroupMember.objects.filter(user = request.user, group = group).first()
-                group.members.remove(groupmember)
+                group.members.remove(groupmember.id)
+                groupmember.delete()
+                Post.objects.filter(user = request.user, group = group).delete()
                 group.save()
             else:
                 return Response("Admin User Cannot be removed from group",status=status.HTTP_400_BAD_REQUEST)
@@ -60,7 +64,4 @@ class GroupMemberCreateView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = GroupMemberSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user = self.request.user.id)
 

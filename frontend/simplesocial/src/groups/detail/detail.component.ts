@@ -45,13 +45,17 @@ export class DetailComponent implements OnInit {
 
   leaveGroup(groupId:number,event:any){
     event.preventDefault();
-    this.groupService.leaveGroup(groupId).subscribe(success=>{},error =>{
+    this.groupService.leaveGroup(groupId).subscribe(success=>{
+      window.location.reload();
+    },error =>{
       alert(error.error);
     })
   }
 
   joinGroup(groupId:number){
-    this.groupService.addMember(groupId).subscribe(success=>{},
+    this.groupService.addMember(groupId).subscribe(success=>{
+      window.location.reload();
+    },
       error => {
         console.log(error);
       })

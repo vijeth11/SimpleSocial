@@ -60,10 +60,9 @@ export class GroupDataService {
   }
   
   public addMember(groupid:number):Observable<any>{
-    return this.http.post<any>('api/add-member',{
-      'csrfmiddlewaretoken': this.authentication.getCSRFToken(),
+    return this.http.post<any>('api/add-member/',{
       'group':groupid,
-      'user':this.authentication.getUserName()
+      'user':this.authentication.getUserId()
     },
     {
       headers:{

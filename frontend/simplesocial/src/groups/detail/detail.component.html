@@ -16,10 +16,10 @@
               <a *ngIf="isLoggedInUserAdmin()" [routerLink]="['../../../','group','update',{'id':group.id}]" class = "btn btn-lg btn-fill btn-warning"> 
                 Group Update <span class="glyphicon glyphicon-remove-circle"></span>
               </a>
-              <a *ngIf="isLoggedInUserAdmin()" [routerLink]="['../../../','post','create',{'id':group.id},{'type':'create'}]" class = "btn btn-lg btn-fill btn-warning"> 
+              <a *ngIf="userInCurrentGroup" [routerLink]="['../../../','post','create',{'groupId':group.id,'type':'create'}]" class = "btn btn-lg btn-fill btn-warning"> 
                 Post In Group <span class="glyphicon glyphicon-remove-circle"></span>
               </a>
-              <button (click)="deleteGroup(group.id)" class = "btn btn-lg btn-fill btn-danger"> 
+              <button *ngIf="isLoggedInUserAdmin()" (click)="deleteGroup(group.id)" class = "btn btn-lg btn-fill btn-danger"> 
                 Group Delete <span class="glyphicon glyphicon-remove-circle"></span>
               </button>
             </ng-template>

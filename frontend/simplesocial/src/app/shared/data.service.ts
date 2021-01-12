@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 export class DataService {
   private loggedinUserToken:string = '';
   private userName:string ='';
+  private userId:number = 0;
   public isUserLoggedIn:Subject<boolean> = new Subject<boolean>();
   constructor(private http:HttpClient,private router:Router) { 
     this.isUserLoggedIn.next(false);
@@ -17,6 +18,11 @@ export class DataService {
   public getUserName():string{
     return this.userName;
   }
+
+  public getUserId():number{
+    return this.userId;
+  }
+
   public Authorized():boolean{
     this.getLoggedInUserToken();
     this.isUserLoggedIn.next(this.loggedinUserToken.length > 0);
@@ -26,14 +32,17 @@ export class DataService {
   public getLoggedInUserToken():string{
     this.loggedinUserToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : this.loggedinUserToken;
     this.userName = localStorage.getItem('username') ? localStorage.getItem('username') : this.userName;
+    this.userId = localStorage.getItem('userid') && Number(localStorage.getItem('userid')) > 0? Number(localStorage.getItem('userid')) : this.userId;
     return this.loggedinUserToken;
   }
   
-  private setLoginTokenandUsername(username:string,token:string){
+  private setLoginTokenAndUsernameAndUserId(username:string,token:string, userid:number){
       this.loggedinUserToken='Token '+token;
       localStorage.setItem('userToken',this.loggedinUserToken);
       this.userName = username;
       localStorage.setItem('username',username);
+      this.userId = userid;
+      localStorage.setItem('userid', userid.toString());
   }
 
   public getCSRFToken():string{
@@ -50,7 +59,7 @@ export class DataService {
     let cookie = this.getCSRFToken();   
     this.http.get('api/get-token?username='+email).subscribe((data:any) => {
       this.isUserLoggedIn.next(true);
-      this.setLoginTokenandUsername(email,data.token);
+      this.setLoginTokenAndUsernameAndUserId(email,data.token,data.user_id);
       this.router.navigate(['home']);
     },
     (error) => {
@@ -63,7 +72,7 @@ export class DataService {
         }
       }).subscribe((data:any) => {
         this.isUserLoggedIn.next(true);
-        this.setLoginTokenandUsername(email,data.token);
+        this.setLoginTokenAndUsernameAndUserId(email,data.token,data.user_id);
         this.router.navigate(['home']);
       },(error)=>{
         if(error.error.non_field_errors && error.error.non_field_errors.length > 0){

@@ -15,6 +15,7 @@ export class FormComponent implements OnInit {
   groupsList:any = [];
   selectedGroupId:number;
   type:string;  
+  postId:number=0;
   public displaySuccessMessage:boolean = false;
 
   constructor(
@@ -23,9 +24,12 @@ export class FormComponent implements OnInit {
     private router:Router
     ) {
     this.route.params.subscribe(data => { 
-      this.selectedGroupId = data['id'];
+      this.selectedGroupId = data['groupId'];
       if(data['type']){
         this.type = data['type'];
+      }
+      if(data['id']){
+        this.postId = data['id'];
       }
     });
    }
@@ -47,31 +51,44 @@ export class FormComponent implements OnInit {
     this.postForm.get('Group').setValue(this.selectedGroupId ? this.selectedGroupId : 0);
   }
 
+  private displayError(error:any){
+    if(error.error['group']){
+      alert(error.error['group']);
+    }else if(error.error['message']){
+      alert(error.error['message']);
+    }else{
+      alert(error.error);
+    }
+  }
+
+  private displaySuccess(){
+    this.displaySuccessMessage = true;
+        setTimeout(()=>{
+          this.displaySuccessMessage = false;
+          this.router.navigate(['post']);
+        },5000);
+  }
+
   public createPost(post:FormGroup){
     if(this.type=='update'){
       this.updatePost(post);
     }else{
       this.postDataService.createPost(post.value.Group, post.value.Message).subscribe(()=>{
-        this.displaySuccessMessage = true;
-        setTimeout(()=>{
-          this.displaySuccessMessage = false;
-          this.router.navigate(['post']);
-        },5000)
+        this.displaySuccess();
       },
       (error)=>{
-        if(error.error['group']){
-          alert(error.error['group']);
-        }else if(error.error['message']){
-          alert(error.error['message']);
-        }else{
-          alert(error.error);
-        }
+        this.displayError(error);
       });
     }
   }
 
   public updatePost(post:FormGroup){
-    console.log(post.value.Message);
-    console.log(this.selectedGroupId);
+    this.postDataService.updatePost(this.selectedGroupId,post.value.Message,this.postId).subscribe(()=>{
+      this.displaySuccess();
+    },
+    (error)=>{
+      this.displayError(error);
+    })
   }
+
 }
