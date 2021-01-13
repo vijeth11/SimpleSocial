@@ -1,5 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
 import { PostdataService } from '../shared/postdata.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Post } from '../shared/post.interface';
 
 @Component({
@@ -10,18 +11,17 @@ import { Post } from '../shared/post.interface';
 export class ListComponent implements OnInit {
 
   public usergroups:any = [];
-  public posts:Post[] = [];
+  @Input() inGroupPage:boolean = false;
+  @Input() posts:Post[] = [];
+  @Input() displayOnlyList:boolean = false;
   public othergroups:any = [];
   isUserAuthenticated:boolean = true;
 
-  constructor(private postDataService:PostdataService) { 
-    
+  constructor(private postDataService:PostdataService, private route:ActivatedRoute) { 
+    this.posts = this.route.snapshot.data.post;
   }
 
   ngOnInit() {
-    this.postDataService.getPostList().subscribe((data:Post[])=>{
-      this.posts = data;
-    })
     this.postDataService.getGroups().subscribe((data)=>{
         data.forEach((ele)=>{
           if(ele.user != null){

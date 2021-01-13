@@ -1,3 +1,5 @@
+import { PostdataService } from './../shared/postdata.service';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,8 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserListComponent implements OnInit {
 
-  posts:any = []
-  constructor() { }
+  public posts:any = []
+  public username="";
+  
+  constructor(private route:ActivatedRoute,private postService:PostdataService) { 
+    this.posts = this.route.snapshot.data.post;
+    this.route.params.subscribe(data=>{
+      this.username = data['name'];
+      if(this.username){
+        this.posts = this.route.snapshot.data.post.filter(ele => ele.user.username == this.username);
+      }
+    });
+  }
 
   ngOnInit() {
   }

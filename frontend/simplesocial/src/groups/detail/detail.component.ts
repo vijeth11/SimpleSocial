@@ -1,3 +1,4 @@
+import { PostdataService } from './../../post/shared/postdata.service';
 import { GroupDataService } from './../shared/group.data.service';
 import { DataService } from './../../app/shared/data.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,19 +13,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DetailComponent implements OnInit {
 
   public userInCurrentGroup:boolean = false;
-  public posts:any = [];
+  public posts:any;
   public group:Group;
   public loggedInUserName:String;
 
   constructor(private service:DataService,
     private groupService:GroupDataService,
     private route:ActivatedRoute,
+    private postService:PostdataService,
     private router:Router) { 
     this.route.params.subscribe(groupId => {
       this.groupService.getGroup(groupId.id).subscribe((detail:Group) => {
         this.group = detail;
         this.loggedInUserName = this.service.getUserName(); 
         this.userInCurrentGroup = this.group.members.findIndex((element) => {return element.email==this.loggedInUserName;}) > -1;
+        this.posts = this.route.snapshot.data.posts ? this.route.snapshot.data.posts.filter((ele) => ele.group.id == groupId.id) : [];
       });
     })
   }

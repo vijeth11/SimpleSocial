@@ -30,17 +30,17 @@
               </button>
             </ng-template>
           </div>
-        </div>
-
-      <div class="row">
-        <div class = "col-md-8">
-          <ul *ngIf="posts.length > 0;else noPostMessage">
-              <post-list></post-list>
-          </ul>
-          <ng-template #noPostMessage>
-            <h2>No posts in this group yet!</h2>
-          </ng-template>          
-        </div>
+        </div>      
+    </div>
+    <div class="row">
+      <h4 class="col-md-8" style="margin-top:3vh">Group Posts</h4>    
+      <div class = "col-md-8 posts-list">
+        <ul *ngIf="posts?.length > 0;else noPostMessage">
+            <post-list [posts]="posts" [displayOnlyList]="true" [inGroupPage]="true"></post-list>
+        </ul>
+        <ng-template #noPostMessage>
+          <h2>No posts in this group yet!</h2>
+        </ng-template>          
       </div>
     </div>
   </div>

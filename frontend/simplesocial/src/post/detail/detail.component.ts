@@ -12,8 +12,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DetailComponent implements OnInit {
 
   @Input() post:Post;
+  @Input() inGroupPage:boolean = false;
   public isUserAuthenticated:boolean = false;
   public loggedInUserEmail:string = "";
+
   constructor(
     private postService:PostdataService,
     private authentication:DataService,
@@ -22,7 +24,6 @@ export class DetailComponent implements OnInit {
     this.loggedInUserEmail = this.authentication.getUserName();
     this.authentication.isUserLoggedIn.subscribe((data:boolean) => {
       this.isUserAuthenticated = data;
-      console.log(this.isUserAuthenticated);
     });
    }
 

@@ -1,3 +1,4 @@
+import { PostdataService } from './../../post/shared/postdata.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,7 +7,7 @@ import { DataService } from 'src/app/shared/data.service';
 @Injectable()
 export class GroupDataService {
   loggedinUserToken:string = '';
-  constructor(private http:HttpClient,private authentication:DataService) { }
+  constructor(private http:HttpClient,private authentication:DataService){}
 
   public getGroups():Observable<Group[]>{
     return this.http.get<Group[]>("api/group-list/");

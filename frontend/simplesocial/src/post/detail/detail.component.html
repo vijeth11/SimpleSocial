@@ -3,12 +3,15 @@
           <div class="media-body">            
             <h5 class="media-heading">
               <span class="username">
-                <a [routerLink]="['post',post.userusername,'userlist']"><strong> {{ post.user.username }}</strong></a>
+                <a [routerLink]="['/post',post.user.username,'userlist']"><strong> {{ post.user.username }}</strong></a>
               </span>
               <time class="time">
                 {{ post.created_at }}
               </time>
             </h5>
+            <h4 *ngIf = "!inGroupPage">
+              Group : <a [routerLink]="['/group',post.group.id,'detail']">{{post.group.name}}</a>
+            </h4>
             <div class="media-footer">
                 <a *ngIf="isUserAuthenticated && post.user.email == loggedInUserEmail" (click)="deletePost(post.id)" class="btn btn-large btn-simple">
                   <span class="text-danger icon-label">Delete</span>

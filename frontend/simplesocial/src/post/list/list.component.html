@@ -1,7 +1,7 @@
 <div class="post=-page">
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="!displayOnlyList">
         <div class="card card-with-shaddow">
           <div class="content">
             <h5 class="title">Your Groups</h5>
@@ -23,8 +23,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8">
-        <post-detail *ngFor="let post of posts" [post]="post"></post-detail>
+      <div [ngClass]="{'col-md-12':displayOnlyList,'col-md-8':!displayOnlyList}">
+        <post-detail *ngFor="let post of posts" [post]="post" [inGroupPage]="inGroupPage"></post-detail>
       </div>
     </div>
   </div>
