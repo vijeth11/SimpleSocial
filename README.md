@@ -15,3 +15,8 @@ This is a Social website where users can add new post and comment .
   docker-compose down // to stop containsers
   docker-compose run <app-name> sh -c "python manage.py test"
   ```
+
+# Command to Create SSH to add in AWS
+```
+ssh-keygen -t rsa -b 4096 -C "vijeth11@yahoo.co.in" //create the pair-key 
+```
