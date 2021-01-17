@@ -32,7 +32,7 @@ $PROJECT_BASE_PATH/env/bin/python manage.py collectstatic --noinput
 cp $PROJECT_BASE_PATH/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/simplesocial.conf
 supervisorctl reread
 supervisorctl update
-supervisorctl restart profiles_api
+supervisorctl restart simplesocial
 
 # Configure nginx
 cp $PROJECT_BASE_PATH/deploy/nginx_profiles_api.conf /etc/nginx/sites-available/simplesocial.conf
