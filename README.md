@@ -6,3 +6,9 @@ Django
 Django Rest Framework
 Angular
 Docker
+
+#Docker Commands
+docker build .
+docker-compose up // to run containers
+docker-compose down // to stop containsers
+docker-compose run <app-name> sh -c "python manage.py test"
