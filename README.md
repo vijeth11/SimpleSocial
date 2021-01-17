@@ -17,6 +17,8 @@ This is a Social website where users can add new post and comment .
   ```
 
 # Command to Create SSH to add in AWS
+https://www.udemy.com/course/django-python/learn/lecture/7371360#overview ## follow steps from this
 ```
-ssh-keygen -t rsa -b 4096 -C "vijeth11@yahoo.co.in" //create the pair-key 
+ssh-keygen -t rsa -b 4096 -C "vijeth11@yahoo.co.in" //create the pair-key
+ssh ubuntu@ec2-13-232-131-135.ap-south-1.compute.amazonaws.com  
 ```
